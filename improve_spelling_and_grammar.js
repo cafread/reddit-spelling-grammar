@@ -4,8 +4,11 @@
 // Improved by  monogram on reddit.com
 //              Little_Kitty on reddit.com
 //              ax on stackoverflow.com
+// @namespace   reddit_spag
 // @description Replaces poor spelling and grammar and capitalises the first letter of sentences.
-// @include     http://www.reddit.com/*
+// @include     *.reddit.com/*
+// @version     1
+// @grant       none
 // ==/UserScript==
 
 // Although this is written to alter comments on Reddit, it would be trivial
@@ -241,7 +244,7 @@ if (commentNodes.snapshotLength > 0) {
     for (let j = 0; j < s.length; j++) {
       if (bNextUpper && s[j] != ' ') {
         let repChar = s[j].toUpperCase();
-        bNextUpper = false;  
+        bNextUpper = false;
         if (repChar != s[j]) {
           s = s.substr(0, j) + repChar + s.substr(j+1);
           j = 0;
@@ -249,6 +252,7 @@ if (commentNodes.snapshotLength > 0) {
       }
       if (s[j] == '.' || s[j] == '!' || s[j] == '?') bNextUpper = true;
     }
+    // Apply the generated regular expressions
     for (let key in ciReplacements) s = s.replace(regex[key], ciReplacements[key]);
     for (let key in csReplacements) s = s.replace(regex[key], csReplacements[key]);
     for (let key in nonWordReplacements) s = s.replace(regex[key], nonWordReplacements[key]);
